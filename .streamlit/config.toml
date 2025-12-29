@@ -1,0 +1,10 @@
+[theme]
+primaryColor = "#00FF94"  # Neon Green
+backgroundColor = "#0E1117" # Deep Space Dark
+secondaryBackgroundColor = "#262730" # Sidebar Dark
+textColor = "#FAFAFA"
+font = "sans serif"
+
+[server]
+headless = true
+enableCORS = false

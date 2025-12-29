@@ -58,10 +58,16 @@ INSIGHTS = {
 }
 
 print('Loading model...')
-session = ort.InferenceSession('eurosat.onnx')
+# --- FIX: Force Single Thread to prevent Docker Freeze ---
+sess_options = ort.SessionOptions()
+sess_options.intra_op_num_threads = 1
+sess_options.inter_op_num_threads = 1
+sess_options.execution_mode = onnxruntime.ExecutionMode.ORT_SEQUENTIAL
+
+session = ort.InferenceSession('eurosat.onnx', sess_options=sess_options)
 input_name = session.get_inputs()[0].name
 output_name = session.get_outputs()[0].name
-
+print('Model loaded successfully!')
 
 def check_blur(image_bytes, threshold=100.0):
 
@@ -115,7 +121,7 @@ def lambda_handler(event, context):
         if 'image_bytes' not in event:
              return {"statusCode": 400, "body": json.dumps({"error": "No image found"})}
 
-        image_data = event['image_bytes']
+        image_data = bytes(event['image_bytes'])
 
         if check_blur(image_data):
             return {
