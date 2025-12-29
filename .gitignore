@@ -1,0 +1,18 @@
+# Python Standard
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Environment Variables (Secrets)
+.env
+
+# Large Model Files (Unless you are using Git LFS, don't push 100MB+ files)
+*.onnx
+*.pt
+*.h5
+*.onnx.data
+
+
+# OS Junk
+.DS_Store

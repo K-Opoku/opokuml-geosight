@@ -1,0 +1,22 @@
+# Ignore Git history
+.git
+.gitignore
+
+# Ignore Python cache & compiled files
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore local virtual environments (We build fresh in Docker)
+.venv
+venv
+env
+
+# Ignore system junk
+.DS_Store
+
+# Ignore documentation or raw datasets not needed for the app
+README.md
+notebooks/
+raw_data/
