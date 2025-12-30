@@ -30,7 +30,7 @@ with st.sidebar:
     st.markdown("""
     **GeoSight** is a satellite terrain intelligence system built for the **Opoku ML** portfolio.
     
-    It uses a **ResNet-50** Deep Learning model (ONNX) running on **AWS Lambda (Docker)** to classify satellite imagery into 10 distinct terrain types for urban planning and environmental monitoring.
+    It uses a **ConvNeXt Tiny** Deep Learning model (ONNX) running on **AWS Lambda (Docker)** to classify satellite imagery into 10 distinct terrain types for urban planning and environmental monitoring.
     """)
     
     st.subheader("📝 Instructions")
@@ -46,10 +46,10 @@ with st.sidebar:
     st.markdown(
         """
         <div style='display: flex; gap: 10px;'>
-            <a href='https://github.com/YOUR_GITHUB_USER' target='_blank'>
+            <a href='https://github.com/K-Opoku' target='_blank'>
                 <img src='https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white' width='100' />
             </a>
-            <a href='https://www.linkedin.com/in/YOUR_LINKEDIN_USER/' target='_blank'>
+            <a href='https://www.linkedin.com/in/kofi-opoku-98b903301/' target='_blank'>
                 <img src='https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white' width='100' />
             </a>
         </div>
@@ -74,7 +74,7 @@ with col1:
         st.image(image, caption="Source Image", use_container_width=True)
         
         # Centered Button
-        if st.button("🚀 Analyze Terrain", type="primary", use_container_width=True):
+        if st.button(" Analyze Terrain", type="primary", use_container_width=True):
             
             with st.spinner("Processing via AWS Lambda Container..."):
                 try:

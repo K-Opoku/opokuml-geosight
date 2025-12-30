@@ -5,15 +5,11 @@ import io
 import json
 import cv2  
 
-
-
 CLASSES = ['AnnualCrop', 'Forest', 'HerbaceousVegetation', 'Highway', 
            'Industrial', 'Pasture', 'PermanentCrop', 'Residential', 
            'River', 'SeaLake']
 
 # --- BUSINESS LOGIC LAYER ---
-# This dictionary maps the model's raw prediction to actionable insights.
-
 INSIGHTS = {
     'AnnualCrop': {
         "description": "Detected cultivated land used for seasonal farming (e.g., corn, wheat, vegetables).",
@@ -62,7 +58,8 @@ print('Loading model...')
 sess_options = ort.SessionOptions()
 sess_options.intra_op_num_threads = 1
 sess_options.inter_op_num_threads = 1
-sess_options.execution_mode = onnxruntime.ExecutionMode.ORT_SEQUENTIAL
+# FIX 1: Changed 'onnxruntime' to 'ort' to match your import at the top
+sess_options.execution_mode = ort.ExecutionMode.ORT_SEQUENTIAL
 
 session = ort.InferenceSession('eurosat.onnx', sess_options=sess_options)
 input_name = session.get_inputs()[0].name
@@ -95,6 +92,8 @@ def check_blur(image_bytes, threshold=100.0):
 
 def preprocess_image(image_bytes):
     image = Image.open(io.BytesIO(image_bytes))
+    
+    # FIX 2: Changed 64 to 224 to match your EuroSAT model requirements
     image = image.resize((224, 224), Image.BICUBIC)
     
     # Normalizing the image
@@ -113,8 +112,6 @@ def preprocess_image(image_bytes):
 def softmax(x):
     e_x = np.exp(x - np.max(x))
     return e_x / e_x.sum()
-
-
 
 def lambda_handler(event, context):
     try:
