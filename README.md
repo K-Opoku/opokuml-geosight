@@ -43,7 +43,7 @@ I chose **ConvNext Tiny** after researching State-of-the-Art (SOTA) models for s
 
 ### The Training Struggle & Pivot
 1.  **The Failure:** I initially trained with **frozen weights** (ImageNet pre-training). Accuracy hit a ceiling of **<30%** because satellite features (top-down, multispectral) differ fundamentally from ImageNet (side-view objects like dogs or cars).
-2.  **The Solution:** I unfroze the backbone, and trained the model entirely on the Eurosat dataset entirely. I started getting the expected metric score.
+2.  **The Solution:** I unfroze the backbone, and trained the model entirely on the Eurosat dataset. I started getting the expected metric score.
 3.  **The Compute Pivot:** Local training was taking hours without visible output. I migrated the dataset temporarily to **Google Colab** to leverage high-speed GPU acceleration, which allowed the model to converge rapidly.
 
 ### Hyperparameters & Preprocessing
@@ -68,8 +68,8 @@ sess_options.inter_op_num_threads = 1
 ### 2. The Hybrid Docker Strategy
 I faced a "dependency hell" where the **AWS Lambda Python 3.12** environment conflicted with specific `onnxruntime` and `OpenCV` versions.
 
-* **The Innovation:** I implemented a **Hybrid Dockerfile** strategy. 
-* **The Execution:** I used `uv` and `uv.lock` for lightning-fast, reproducible installs of 95% of the environment to ensure consistency. Then, I used `pip` to surgically install the specific, compatible versions of the remaining libraries required to run smoothly on the AWS Lambda base image.
+* **The Innovation:** I implemented a **Hybrid Dockerfile** strategy. In my dockerfile, aws wasn't compatible with my onnx version but when i upgrade the version to suit it, another conflict rise between open cv and the upgraded version of onnx.
+* **The Execution:** I used `uv` and `uv.lock` for lightning-fast, reproducible installs of 95% of the environment to ensure consistency. Then, I used `pip` to surgically install the specific, compatible versions of the remaining libraries (onnx) required to run smoothly on the AWS Lambda base image. This hybrid approach still ensures reproducibility and compatibility if neccessary.
 
 ---
 
@@ -82,6 +82,8 @@ GeoSight doesn't just provide a label; it provides an automated strategy based o
 | **Forest** | High-density vegetation detected. | Monitor for deforestation or wildfire risks in dry seasons. |
 | **Industrial** | Man-made structures/factories. | Evaluate urban heat island effect and runoff management. |
 
+ ### 6. Streamlit app: 
+After completion and containerization, I built a streamlit app on top of it. This app is an interactive user interface that lets users upload images easily and get a prediction with explanation of the prediction, confidence score and a visual representation of the prediction
 ---
 
 ### 🚀 How to Run Locally
@@ -96,6 +98,5 @@ docker build -t opokuml-geosight .
 # Run the container (Mapping Streamlit port)
 docker run -p 9090:8080 opokuml-geosight
 ```
-2. Standard Installation
-If you prefer to run it directly in your local environment:
+
 
