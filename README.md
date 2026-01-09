@@ -92,11 +92,16 @@ After completion and containerization, I built a streamlit app on top of it. Thi
 This builds the hybrid environment optimized for AWS Lambda compatibility:
 
 ```bash
+# clone the repository
+git clone https://github.com/K-Opoku/opokuml-geosight.git
+cd opokuml-geosight
+
 # Build the image
 docker build -t opokuml-geosight .
 
 # Run the container (Mapping Streamlit port)
 docker run -p 9090:8080 opokuml-geosight
 ```
+
 
 
